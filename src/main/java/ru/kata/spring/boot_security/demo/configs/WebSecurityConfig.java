@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -24,12 +23,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.myUserDetailsService = myUserDetailsService;
     }
 
-/*    @Override
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(myUserDetailsService)
                 .passwordEncoder(passwordEncoder());
-    }*/
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -49,11 +48,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(10);
     }
 
-    @Bean
+/*    @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(myUserDetailsService);
         return authenticationProvider;
-    }
+    }*/
 }
