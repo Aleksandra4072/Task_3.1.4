@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public void removeUser(long id) {
+    public void removeUser(Long id) {
         entityManager.remove(entityManager.find(User.class, id));
     }
 
@@ -41,14 +41,14 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public User getById(long id) {
-        return (User)entityManager.createQuery("select u from User u join fetch u.id where u.id=:usrId")
+    public User getById(Long id) {
+        return (User)entityManager.createQuery("select u from User u where u.id=:usrId")
                 .setParameter("usrId", id).getSingleResult();
     }
 
     @Override
     public User getByUsername(String username) {
-        return (User)entityManager.createQuery("select u from User u join fetch u.username where u.username=:username")
+        return (User)entityManager.createQuery("select u from User u where u.username=:username")
                 .setParameter("username", username).getSingleResult();
     }
 }

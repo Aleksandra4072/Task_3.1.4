@@ -8,7 +8,7 @@
     <title>Add user</title>
 </head>
 <body>
-<form action="#" th:action="@{/addUserToDB}" th:object="${user}" method="post">
+<form action="#" th:action="@{/admin/addUserToDB}" th:object="${user}" method="post">
     <p>
         <label th:for="username">Username
         <input type="text"
@@ -41,13 +41,13 @@
         </label>
         <br/>
         <br/>
-        <label> Admin
+        <label>
             <input type="checkbox"
                    name="roleAdmin"
                    th:value="ROLE_ADMIN"
                    th:text="Admin">
         </label>
-        <label>User
+        <label>
             <input type="checkbox"
                    name="roleUser"
                    th:value="ROLE_USER"

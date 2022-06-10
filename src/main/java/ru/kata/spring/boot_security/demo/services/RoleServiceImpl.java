@@ -20,22 +20,8 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public List<Role> allRoles() {
-        return roleRepository.allRoles();
-    }
-
-    @Override
     public Role getRoleByName(String name) {
         return roleRepository.getRoleByName(name);
     }
 
-    @Override
-    public Role getRoleById(Long id) {
-        return roleRepository.getRoleById(id);
-    }
-
-    @Override
-    public Role getDefaultRole() {
-        return roleRepository.getDefaultRole();
-    }
 }

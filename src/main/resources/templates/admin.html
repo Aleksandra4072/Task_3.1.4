@@ -27,8 +27,8 @@
             <td th:text="${user.lastName}"/>
             <td th:text="${user.email}"/>
             <td>
-                <a th:href="@{editUser/{id}(id=${user.id})}">Edit</a>
-                <a th:href="@{removeUser/{id}(id=${user.id})}">Delete</a>
+                <a th:href="@{admin/editUser/{id}(id=${user.id})}">Edit</a>
+                <a th:href="@{admin/removeUser/{id}(id=${user.id})}">Delete</a>
             </td>
         </tr>
         </tbody>
@@ -36,7 +36,7 @@
 </div>
 <div>
     <br/>
-    <p><a href="/addUser">
+    <p><a href="admin/addUser">
         <button style="color: #4525a9">Add user</button></a></p>
 </div>
 
