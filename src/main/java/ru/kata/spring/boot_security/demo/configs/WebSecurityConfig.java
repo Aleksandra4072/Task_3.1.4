@@ -12,10 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
+@ComponentScan("ru.kata.spring.boot_security.demo")
 @EnableWebSecurity
-@ComponentScan(basePackages = {"ru.kata.spring.boot_security.demo"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private final UserDetailsService userDetailsService;
@@ -46,16 +48,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/").permitAll() // доступность всем
-                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .and()
-                .formLogin().successHandler(successUserHandler)
+        http.formLogin().loginPage("/login")
+                .loginProcessingUrl("/login")
+                .successHandler(successUserHandler)
                 .permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                .authorizeRequests()
+                .antMatchers("/api/admin/*").access("hasAuthority('ADMIN')")
+                .antMatchers("/api/user/*").access("hasAnyAuthority('ADMIN', 'USER')")
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .permitAll()
+                .and()
+                .csrf().disable();
     }
 }
