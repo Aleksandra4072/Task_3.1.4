@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -34,13 +37,35 @@ public class AdminController {
     }
 
     @PostMapping(value = "/admin/editUser")
-    public void editUser(@RequestParam Long id, String username, String password, String firstName, String lastName, String email, String role) {
-        userService.editUser(new User(id, username, password, firstName, lastName, email), role);
+    public String editUser(@ModelAttribute User user,
+                           @RequestParam(value = "roleChoice", required = false) Long[] roleChoice) {
+        Set<Role> roles = new HashSet<>();
+        if (roleChoice != null) {
+            for (long i : roleChoice) {
+                roles.add(userService.findRoleById(i));
+            }
+        } else {
+            roles.add(userService.findRoleById(2L));
+        }
+        user.setRoles(roles);
+        userService.saveAndFlush(user);
+        return "redirect:/admin";
     }
 
     @PostMapping(value = "/admin/addUser")
-    public void addUser(@RequestParam Long id, String username, String password, String firstName, String lastName, String email, String role){
-        userService.addUser(new User(id, username, password, firstName, lastName, email), role);
+    public String addUser(@ModelAttribute User user,
+                          @RequestParam(value = "roleChoice", required = false) Long[] roleChoice) {
+        Set<Role> roles = new HashSet<>();
+        if (roleChoice != null) {
+            for (long i : roleChoice) {
+                roles.add(userService.findRoleById(i));
+            }
+        } else {
+            roles.add(userService.findRoleById(2L));
+        }
+        user.setRoles(roles);
+        userService.addUser(user);
+        return "redirect:/admin";
     }
 
     @PostMapping(value = "user/getUser")

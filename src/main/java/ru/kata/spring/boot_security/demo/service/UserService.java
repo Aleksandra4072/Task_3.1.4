@@ -9,8 +9,9 @@ import java.util.Set;
 
 public interface UserService extends UserDetailsService {
     List<User> allUsers();
-    void addUser(User user, String role);
-    void removeUser(long id);
-    void editUser(User user, String role);
-    Set<Role> getRoleForUser(String role);
+    void addUser(User user);
+    void removeUser(Long id);
+    List<Role> allRoles();
+    void saveAndFlush(User user);
+    Role findRoleById(Long roleId);
 }
