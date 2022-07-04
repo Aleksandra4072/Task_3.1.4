@@ -88,6 +88,7 @@ $(document).on("click", ".remove", function () {
     });
 })
 
+
 //Add user
 $('.addUser').click(function () {
     $('#usersTable').trigger('click');
@@ -96,9 +97,10 @@ $('.addUser').click(function () {
         type: 'POST',
         url: '/api/admin/addUser',
         data: formData,
-        timeout: 100,
+        //timeout: 100,
         success: function () {
-            allUsers()
+            $('.addUserForm')[0].reset();
+            allUsers();
         }
     })
 });
@@ -111,13 +113,13 @@ function getUser() {
         type: 'POST',
         url: '/api/user/getUser',
         timeout: 3000,
-        error: function() {
+        error: function () {
             $('#blockMenuForUser').hide();
         },
         success: function (data) {
             console.log(data);
             $.each(data, function (i, user) {
-                if(user.roles == "USER") {
+                if (user.roles == "USER") {
                     $('#userMenu').trigger('click');
                     $('#userPage').trigger('click');
                     $('#blockMenuForAdmin').hide();
