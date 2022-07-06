@@ -14,4 +14,6 @@ public interface UserService extends UserDetailsService {
     List<Role> allRoles();
     void saveAndFlush(User user);
     Role findRoleById(Long roleId);
+    Set<Role> setRole(Long[] roleChoice);
+    Set<Role> setRoleForEdition(Long[] roleChoice, User user);
 }

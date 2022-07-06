@@ -12,7 +12,9 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -68,6 +70,34 @@ public class UserServiceImpl implements UserService{
     @Override
     public Role findRoleById(Long roleId) {
         return roleRepository.findRoleById(roleId);
+    }
+
+    @Override
+    public Set<Role> setRole(Long[] roleChoice) {
+        Set<Role> roles = new HashSet<>();
+        if (roleChoice != null) {
+            for (long i : roleChoice) {
+                roles.add(roleRepository.findRoleById(i));
+            }
+        } else {
+            roles.add(roleRepository.findRoleById(2L));
+        }
+        return roles;
+    }
+
+    @Override
+    public Set<Role> setRoleForEdition(Long[] roleChoice, User user) {
+        Set<Role> roles = new HashSet<>();
+        if (roleChoice != null) {
+            for (long i : roleChoice) {
+                roles.add(roleRepository.findRoleById(i));
+
+            }
+            return roles;
+        } else {
+            User editUser = userRepository.getUserById(user.getId());
+            return editUser.allRoles();
+        }
     }
 }
 

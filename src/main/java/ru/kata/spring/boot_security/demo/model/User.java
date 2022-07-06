@@ -71,6 +71,10 @@ public class User implements UserDetails {
         return roles.toString().replaceAll("\\p{P}", "");
     }
 
+    public Set<Role> allRoles(){
+        return roles;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
